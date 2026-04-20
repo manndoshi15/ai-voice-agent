@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('call-form');
     const phoneInput = document.getElementById('phone');
-    const messageTypeInput = document.getElementById('messageType');
     const callBtn = document.getElementById('call-btn');
     const btnText = document.querySelector('.btn-text');
     const btnLoader = document.querySelector('.btn-loader');
@@ -19,7 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         
         const phoneNumber = phoneInput.value.trim();
-        const messageType = messageTypeInput.value;
         
         // Basic frontend validation
         if (!/^\+?[1-9]\d{1,14}$/.test(phoneNumber)) {
@@ -38,8 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    phone_number: phoneNumber,
-                    message_type: messageType
+                    phone_number: phoneNumber
                 })
             });
 

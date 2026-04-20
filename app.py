@@ -29,21 +29,12 @@ def make_call():
 
     data = request.json
     phone_number = data.get('phone_number')
-    message_type = data.get('message_type', 'default')
 
     if not phone_number:
         return jsonify({'success': False, 'message': 'Phone number is required.'}), 400
 
     if not validate_phone_number(phone_number):
         return jsonify({'success': False, 'message': 'Invalid phone number format. Please use E.164 (e.g., +1234567890).'}), 400
-
-    # Optional: Override the assistant's first message based on message_type
-    first_message_map = {
-        'sales': "Hi! I'm calling to check if you'd like to renew your AI subscription.",
-        'support': "Hello! I'm calling because your support ticket has been resolved. Let me walk you through the details.",
-        'default': "Hello! I'm your AI voice assistant. How can I help you today?"
-    }
-    first_message = first_message_map.get(message_type, first_message_map['default'])
 
     # ----------------------------------------------------------
     # Call the Vapi API to initiate an outbound phone call
@@ -60,9 +51,6 @@ def make_call():
         "phoneNumberId": VAPI_PHONE_NUMBER_ID,
         "customer": {
             "number": phone_number
-        },
-        "assistantOverrides": {
-            "firstMessage": first_message
         }
     }
 
